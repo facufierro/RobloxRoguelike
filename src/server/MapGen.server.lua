@@ -1,6 +1,7 @@
+local Tile = require(game.ReplicatedStorage.Common.Tile)
+
 local map = Instance.new("Model", workspace)
 local tile = {}
-local tileSize = Vector3.new(10, 1, 10)
 local mapSize = Vector3.new(16, 1, 16)
 
 function GenerateMap()
@@ -12,12 +13,14 @@ function GenerateFloor()
     for x = 0, mapSize.X do
         tile[x] = {}
         for z = 0, mapSize.Z do
-            tile[x][z] = Instance.new("Part", map)
-            tile[x][z].Anchored = true
-            tile[x][z].Name = "Tile" .. " " .. x .. "," .. z
-            tile[x][z].Size = tileSize
-            tile[x][z].Position = Vector3.new(x * tileSize.X, 0, z * tileSize.Z)
+            tile[x][z] = Tile.new("Tile " .. x .. "," .. z, map)
+            tile[x][z].position = Vector3.new(x * tile[x][z].size.X, 0, z * tile[x][z].size.Z)
+            tile[x][z].instantiate()
         end
     end
+end
+
+function GenerateRoom()
+
 end
 GenerateMap()
