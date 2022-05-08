@@ -1,7 +1,10 @@
+local tweenService = game:GetService("TweenService")
+
 Tile = {}
 Tile.__index = Tile
 
 local newTile = {}
+local tileObject
 
 function Tile.new(name, parent, position, size)
     setmetatable(newTile, Tile)
@@ -13,12 +16,37 @@ function Tile.new(name, parent, position, size)
 end
 
 function Tile.instantiate()
-    local tileObject = Instance.new("Part", newTile.parent)
+    tileObject = Instance.new("Part", newTile.parent)
     tileObject.Name = newTile.name
     tileObject.Size = newTile.size
     tileObject.Position = newTile.position
     tileObject.Parent = newTile.parent
     tileObject.Anchored = true
+end
+
+function Tile.fade()
+    local isFading = false
+    local disappear = tweenService:Create(tileObject, TweenInfo.new(), {
+        Transparency = 1,
+        CanCollide = false
+    })
+    local appear = tweenService:Create(tileObject, TweenInfo.new(), {
+        Transparency = 0,
+        CanCollide = true
+    })
+    tileObject.Touched:Connect(function(hit)
+        local humanoid = hit.Parent:FindFirstChildWhichIsA("Humanoid")
+        if humanoid then
+            if isFading == false then
+                isFading = true
+                disappear:Play()
+                task.wait(2)
+                appear:Play()
+                isFading = false
+            end
+
+        end
+    end)
 end
 
 return Tile

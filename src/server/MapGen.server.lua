@@ -16,11 +16,11 @@ function GenerateFloor()
             tile[x][z] = Tile.new("Tile " .. x .. "," .. z, map)
             tile[x][z].position = Vector3.new(x * tile[x][z].size.X, 0, z * tile[x][z].size.Z)
             tile[x][z].instantiate()
+            if (x == 1 and z == 1) then
+                tile[x][z].fade()
+            end
         end
     end
 end
 
-function GenerateRoom()
-
-end
 GenerateMap()
