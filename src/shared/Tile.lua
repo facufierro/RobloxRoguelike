@@ -26,11 +26,11 @@ end
 
 function Tile.fade()
     local isFading = false
-    local disappear = tweenService:Create(tileObject, TweenInfo.new(), {
+    local fadeOut = tweenService:Create(tileObject, TweenInfo.new(), {
         Transparency = 1,
         CanCollide = false
     })
-    local appear = tweenService:Create(tileObject, TweenInfo.new(), {
+    local fadeIn = tweenService:Create(tileObject, TweenInfo.new(), {
         Transparency = 0,
         CanCollide = true
     })
@@ -39,9 +39,9 @@ function Tile.fade()
         if humanoid then
             if isFading == false then
                 isFading = true
-                disappear:Play()
+                fadeOut:Play()
                 task.wait(2)
-                appear:Play()
+                fadeIn:Play()
                 isFading = false
             end
 
