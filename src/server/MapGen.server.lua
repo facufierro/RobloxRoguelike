@@ -15,9 +15,10 @@ function GenerateFloor()
         for z = 0, mapSize.Z do
             tile[x][z] = Tile.new("Tile " .. x .. "," .. z, map)
             tile[x][z].position = Vector3.new(x * tile[x][z].size.X, 0, z * tile[x][z].size.Z)
-            tile[x][z].instantiate()
+            tile[x][z]:instantiate()
             if (x == 1 and z == 1) then
-                tile[x][z].fade()
+                tile[x][z]:fade()
+                tile[x][z].object.Color = Color3.new(1, 0, 0)
             end
         end
     end

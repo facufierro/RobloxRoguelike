@@ -3,38 +3,39 @@ local tweenService = game:GetService("TweenService")
 Tile = {}
 Tile.__index = Tile
 
-local newTile = {}
 local tileObject
 
-function Tile.new(name, parent, position, size)
+function Tile.new(name, parent, object, position, size)
+    local newTile = {}
     setmetatable(newTile, Tile)
     newTile.name = name
+    newTile.object = object
     newTile.size = size or Vector3.new(10, 10, 10)
     newTile.position = position or Vector3.new(0, 0, 0)
     newTile.parent = parent or workspace
     return newTile
 end
 
-function Tile.instantiate()
-    tileObject = Instance.new("Part", newTile.parent)
-    tileObject.Name = newTile.name
-    tileObject.Size = newTile.size
-    tileObject.Position = newTile.position
-    tileObject.Parent = newTile.parent
-    tileObject.Anchored = true
+function Tile:instantiate()
+    self.object = Instance.new("Part", self.parent)
+    self.object.Name = self.name
+    self.object.Size = self.size
+    self.object.Position = self.position
+    self.object.Parent = self.parent
+    self.object.Anchored = true
 end
 
-function Tile.fade()
+function Tile:fade()
     local isFading = false
-    local fadeOut = tweenService:Create(tileObject, TweenInfo.new(), {
+    local fadeOut = tweenService:Create(self.object, TweenInfo.new(), {
         Transparency = 1,
         CanCollide = false
     })
-    local fadeIn = tweenService:Create(tileObject, TweenInfo.new(), {
+    local fadeIn = tweenService:Create(self.object, TweenInfo.new(), {
         Transparency = 0,
         CanCollide = true
     })
-    tileObject.Touched:Connect(function(hit)
+    self.object.Touched:Connect(function(hit)
         local humanoid = hit.Parent:FindFirstChildWhichIsA("Humanoid")
         if humanoid then
             if isFading == false then
