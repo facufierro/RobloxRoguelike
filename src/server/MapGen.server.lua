@@ -14,11 +14,10 @@ function GenerateFloor()
         tile[x] = {}
         for z = 0, mapSize.Z do
             tile[x][z] = Tile.new("Tile " .. x .. "," .. z, map)
-            tile[x][z].position = Vector3.new(x * tile[x][z].size.X, 0, z * tile[x][z].size.Z)
+            tile[x][z].position = Vector3.new(x * tile[x][z].size.X, math.random(0.0, 1.0), z * tile[x][z].size.Z)
             tile[x][z]:instantiate()
-            if (x == 1 and z == 1) then
-                tile[x][z]:fade()
-                tile[x][z].object.Color = Color3.new(1, 0, 0)
+            if (x == math.random(1, 16) or z == math.random(1, 16)) then
+                tile[x][z]:setFadingTrap()
             end
         end
     end

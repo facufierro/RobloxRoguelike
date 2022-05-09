@@ -25,7 +25,8 @@ function Tile:instantiate()
     self.object.Anchored = true
 end
 
-function Tile:fade()
+function Tile:setFadingTrap()
+    self.object.Color = Color3.new(1, 0, 0)
     local isFading = false
     local fadeOut = tweenService:Create(self.object, TweenInfo.new(), {
         Transparency = 1,
